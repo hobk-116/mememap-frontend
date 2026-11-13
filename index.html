@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f4ef">
+<meta name="description" content="MemeMap — hướng dẫn ghim meme và câu chuyện lên bản đồ Hà Nội.">
+<title>MemeMap — Trang chính</title>
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icon-64x.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/shared.css">
+<link rel="stylesheet" href="/assets/css/home.css">
+</head>
+<body>
+<header class="shell top">
+<a class="brand" href="index.html">
+<img class="mark" src="/assets/icon-128x.png" alt=""> mememap</a>
+<div class="actions">
+<button class="lang" id="lang" type="button" aria-label="Chuyển sang tiếng Anh" title="Chuyển sang tiếng Anh">🇺🇸</button>
+<a class="button" id="headerMapLink" href="landing.html" data-i="open">Mở bản đồ ↗</a>
+<button class="profile-trigger" id="profileButton" type="button" aria-label="Hồ sơ người dùng" hidden>
+<img src="/assets/default-profile-picture.webp" alt="">
+</button>
+</div>
+</header>
+<section class="profile-overlay popup-overlay" id="profileOverlay" role="dialog" aria-modal="true" aria-label="Hồ sơ người dùng">
+<div class="profile-card popup-card">
+<button class="profile-close" id="profileClose" type="button" aria-label="Đóng">×</button>
+<button class="profile-avatar-button" id="profileAvatarButton" type="button" aria-label="Change profile picture" title="Change profile picture">
+<img class="profile-avatar" id="profileAvatar" src="/assets/default-profile-picture.webp" alt="">
+<span class="profile-avatar-edit" aria-hidden="true">✎</span>
+</button>
+<input class="profile-avatar-input" id="profileAvatarInput" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" hidden>
+<strong class="profile-name" id="profileName">
+</strong>
+<span class="profile-username" id="profileUsername">
+</span>
+<span class="profile-location" id="profileCity">Hà Nội</span>
+<div class="profile-stats" id="profileStats">0 meme • 0 aura</div>
+<button class="profile-logout" id="profileLogoutButton" type="button" data-i="logout">Đăng xuất</button>
+</div>
+</section>
+<main class="shell">
+<section class="intro">
+<h1 data-i="title">Mỗi nơi chốn<br>có một câu chuyện.</h1>
+<section class="auth-card" id="authCard" aria-labelledby="authTitle">
+<h2 id="authTitle" data-i="authTitle">Đăng nhập để mở bản đồ</h2>
+<p class="auth-lead" data-i="authLead">Tạo tài khoản hoặc đăng nhập để tiếp tục.</p>
+<div id="authFormState">
+<div class="auth-tabs">
+<button id="loginTab" class="active" type="button" data-i="loginTab">Đăng nhập</button>
+<button id="registerTab" type="button" data-i="registerTab">Đăng ký</button>
+</div>
+<form id="authForm">
+<div class="auth-field auth-hidden" id="nameField">
+<label for="accountName" data-i="nameLabel">Tên hiển thị</label>
+<input id="accountName" name="name" maxlength="60" autocomplete="name">
+</div>
+<div class="auth-field" id="usernameField">
+<label for="accountUsername" data-i="usernameLabel">Username</label>
+<input id="accountUsername" name="username" type="text" minlength="3" maxlength="24" pattern="[A-Za-z0-9][A-Za-z0-9._]{1,22}[A-Za-z0-9]" autocapitalize="off" spellcheck="false" autocomplete="username" required>
+<small class="auth-help" data-i="usernameHint">3–24 ký tự; chỉ dùng chữ không dấu, số, dấu chấm (.) và gạch dưới (_).</small>
+</div>
+<div class="auth-field">
+<label for="accountPassword" data-i="passwordLabel">Mật khẩu</label>
+<input id="accountPassword" name="password" type="password" minlength="8" maxlength="256" autocomplete="current-password" required>
+<small class="auth-help" data-i="passwordHint">Tối thiểu 8 ký tự; chấp nhận chữ hoa, chữ thường, số và ký tự đặc biệt (không có dấu cách).</small>
+</div>
+<button class="auth-submit" id="authSubmit" type="submit" data-i="loginSubmit">Đăng nhập</button>
+</form>
+</div>
+<div class="auth-state" id="authSignedIn">
+<p>
+<span data-i="signedInAs">Đang đăng nhập là</span>
+<strong id="signedInUsername">
+</strong>
+</p>
+<a class="auth-map" href="landing.html" data-i="continueMap">Mở bản đồ ↗</a>
+<button class="auth-logout" id="logoutButton" type="button" data-i="logout">Đăng xuất</button>
+</div>
+<div class="auth-message" id="authMessage" role="status" aria-live="polite">
+</div>
+</section>
+<p class="intro-copy" data-i="desc">MemeMap là bản đồ cộng đồng để chia sẻ meme, ảnh và những chuyện đáng nhớ gắn với các địa điểm ở Hà Nội. Chọn một nơi, kể một chuyện — rồi cùng khám phá thành phố qua góc nhìn của mọi người.</p>
+</section>
+<section class="steps" id="how" aria-label="Cách sử dụng">
+<article class="step">
+<div class="num">01</div>
+<h2 data-i="s1h">Khám phá Hà Nội</h2>
+<p data-i="s1p">Di chuyển hoặc phóng to bản đồ. Chạm vào ghim để xem câu chuyện.</p>
+</article>
+<article class="step">
+<div class="num">02</div>
+<h2 data-i="s2h">Đăng meme</h2>
+<p data-i="s2p">Chạm vào bản đồ hoặc nút “Đặt ghim mới”, thêm tiêu đề và nội dung.</p>
+</article>
+<article class="step">
+<div class="num">03</div>
+<h2 data-i="s3h">Canh tác hào quang</h2>
+<p data-i="s3p">Dùng +aura hoặc −aura để bình chọn cho ghim của người khác. Bạn không thể tự bình chọn ghim của mình.</p>
+</article>
+<article class="step">
+<div class="num">04</div>
+<h2 data-i="s4h">Nông trại hào quang</h2>
+<p data-i="s4p">Mở Nông trại hào quang để xem các ghim được cộng đồng yêu thích nhất.</p>
+</article>
+</section>
+<aside class="note" data-i="note">Vẫn đang thử nghiệm.</aside>
+</main>
+<footer class="shell bottom">
+<span>© 2026 MEMEMAP</span>
+<span data-i="footer">Vibe-coded by GPT-6 Luna &amp; Sol ✳</span>
+</footer>
+<script src="/assets/js/shared.js">
+</script>
+<script src="/assets/js/api.js"></script>
+<script src="/assets/js/home.js">
+</script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f4ef">
+<meta name="description" content="Khám phá và ghim những câu chuyện vui trên bản đồ Hà Nội.">
+<title>MemeMap — Bản đồ Hà Nội</title>
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/icon-64x.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.13.0/dist/maplibre-gl.css" crossorigin="">
+<link rel="stylesheet" href="/assets/css/shared.css">
+<link rel="stylesheet" href="/assets/css/map.css">
+<link rel="stylesheet" href="/assets/css/admin.css">
+</head>
+<body>
+<div id="map" aria-label="MemeMap of Hanoi"></div>
+<div id="mapStatus" class="map-status" role="status" hidden></div>
+<header class="top">
+<a class="brand" href="index.html" title="MemeMap">
+<img class="mark" src="/assets/icon-128x.png" alt=""><span class="brand-name">mememap</span></a>
+<div class="top-actions">
+<button class="top-btn" id="topGuide" type="button" data-t="guide">Hướng dẫn</button>
+<button class="lang" id="lang" type="button" aria-label="Chuyển sang tiếng Anh" title="Chuyển sang tiếng Anh">🇺🇸</button>
+<button class="profile-trigger" id="profileButton" type="button" aria-label="Hồ sơ người dùng">
+<img src="/assets/default-profile-picture.webp" alt="">
+</button>
+</div>
+</header>
+<section class="profile-overlay popup-overlay" id="profileOverlay" role="dialog" aria-modal="true" aria-label="Hồ sơ người dùng">
+<div class="profile-card popup-card">
+<button class="profile-close" id="profileClose" type="button" aria-label="Đóng">×</button>
+<button class="profile-avatar-button" id="profileAvatarButton" type="button" aria-label="Change profile picture" title="Change profile picture">
+<img class="profile-avatar" id="profileAvatar" src="/assets/default-profile-picture.webp" alt="">
+<span class="profile-avatar-edit" aria-hidden="true">✎</span>
+</button>
+<input class="profile-avatar-input" id="profileAvatarInput" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" hidden>
+<strong class="profile-name" id="profileName">
+</strong>
+<span class="profile-username" id="profileUsername">
+</span>
+<span class="profile-location" data-t="profileCity">Hà Nội</span>
+<div class="profile-stats" id="profileStats">0 meme • 0 aura</div>
+<button class="profile-logout" id="profileLogoutButton" type="button" data-t="logout">Đăng xuất</button>
+</div>
+</section>
+<div class="drawer-toggle-group" id="drawerToggleGroup" aria-label="Điều hướng bảng">
+<button class="toggle panel-open" id="toggle" type="button" aria-label="Đóng menu" aria-controls="panel" aria-expanded="true">
+<span id="toggleArrow" aria-hidden="true">←</span>
+<span id="toggleLabel">Menu</span>
+</button>
+</div>
+<button class="toggle admin-toggle" id="adminToggle" type="button" aria-label="Mở bảng quản trị" aria-controls="adminPanel" aria-expanded="false" hidden>
+<span id="adminToggleArrow" aria-hidden="true">←</span>
+<span id="adminToggleLabel">Admin</span>
+</button>
+<aside class="panel" id="panel">
+<div id="mapMenuContent">
+<div class="panel-head">
+<div class="eyebrow" data-t="eyebrow">Hà Nội</div>
+<h1 data-t="title">Chuyện quanh đây.</h1>
+<div class="tools">
+<input class="search" id="search" type="search" placeholder="Tìm trong các ghim…" aria-label="Search pins">
+<button class="icon-btn" id="locate" type="button" title="Vị trí của tôi" aria-label="Vị trí của tôi">◎</button>
+</div>
+</div>
+<div class="list-head">
+<span data-t="listTitle">Ghim trên bản đồ</span>
+<span id="count">00</span>
+</div>
+<div class="list" id="list">
+</div>
+</div>
+<section class="leaderboard-view" id="leaderboard" aria-labelledby="leaderboardTitle">
+<div class="quick-guide-head">
+<div>
+<h2 id="leaderboardTitle" data-t="boardTitle">Nông trại hào quang</h2>
+<p data-t="boardDesc">Xếp hạng theo tổng aura nhận được từ các ghim.</p>
+</div>
+</div>
+<div class="leaderboard-filter">
+<label for="cityFilter" data-t="boardCityLabel">Thành phố</label>
+<select id="cityFilter">
+<option value="hanoi" data-t="cityHanoi">Hà Nội</option>
+</select>
+</div>
+<div class="leaderboard-list" id="leaderboardList">
+</div>
+</section>
+<div class="panel-bottom panel-switch">
+<button class="secondary" id="boardSwitchBtn" type="button" data-t="memerboard">Nông trại hào quang</button>
+</div>
+</aside>
+<aside class="panel admin-panel closed" id="adminPanel" data-drawer-side="right" aria-label="Admin dashboard">
+<div class="panel-head">
+<div class="admin-heading-row"><div class="eyebrow" id="adminEyebrow">Quản trị · Hà Nội</div><button class="admin-history-button" id="adminHistory" type="button" aria-label="Lịch sử quản trị">↶</button></div>
+<h1 id="adminHeading">Quản trị</h1>
+</div>
+<div class="admin-tabs" id="adminTabs" role="tablist" aria-label="Mục quản trị"></div>
+<div class="admin-notice" id="adminNotice" role="status" hidden></div>
+<div class="admin-body" id="adminBody" role="tabpanel" tabindex="0"></div>
+</aside>
+<section class="modal-bg popup-overlay admin-action-overlay" id="adminActionOverlay" role="dialog" aria-modal="true" aria-labelledby="adminActionTitle">
+<form class="modal popup-card admin-action-form" id="adminActionForm">
+<div class="modal-top"><div><h2 id="adminActionTitle"></h2><p id="adminActionDescription"></p></div><button class="close" id="adminActionClose" type="button" aria-label="Đóng">×</button></div>
+<div id="adminActionFields"></div>
+<div class="error" id="adminActionError" role="alert"></div>
+<div class="submit-row"><button id="adminActionCancel" type="button">Hủy</button><button class="save" id="adminActionSubmit" type="submit">Xác nhận</button></div>
+</form>
+</section>
+<section class="quick-guide popup-overlay" id="quickGuide" role="dialog" aria-modal="true" aria-labelledby="quickGuideTitle">
+<div class="quick-guide-card popup-card">
+<div class="quick-guide-head">
+<div>
+<h2 id="quickGuideTitle" data-t="quickTitle">Chào mừng đến với MemeMap</h2>
+<p data-t="quickIntro">Khám phá bản đồ, chia sẻ câu chuyện và cùng cộng đồng bình chọn.</p>
+</div>
+<button class="quick-guide-close" id="closeGuide" type="button" aria-label="Close">×</button>
+</div>
+<div class="quick-step">
+<b>01</b>
+<div>
+<strong data-t="quick1Title">Khám phá Hà Nội</strong>
+<span data-t="quick1Copy">Di chuyển hoặc phóng to bản đồ. Chạm vào ghim để xem câu chuyện.</span>
+</div>
+</div>
+<div class="quick-step">
+<b>02</b>
+<div>
+<strong data-t="quick2Title">Đăng meme</strong>
+<span data-t="quick2Copy">Chạm vào bản đồ hoặc nút “Đặt ghim mới”, thêm tiêu đề và nội dung.</span>
+</div>
+</div>
+<div class="quick-step">
+<b>03</b>
+<div>
+<strong data-t="quick3Title">Canh tác hào quang</strong>
+<span data-t="quick3Copy">Dùng +aura hoặc −aura để bình chọn cho ghim của người khác. Bạn không thể tự bình chọn ghim của mình.</span>
+</div>
+</div>
+<div class="quick-step">
+<b>04</b>
+<div>
+<strong data-t="quick4Title">Nông trại hào quang</strong>
+<span data-t="quick4Copy">Mở Nông trại hào quang để xem các ghim được cộng đồng yêu thích nhất.</span>
+</div>
+</div>
+</div>
+</section>
+<button class="map-hint" id="hint" type="button" data-t="hint">Đặt ghim mới hoặc chạm vào bản đồ</button>
+<div class="modal-bg popup-overlay" id="modal" role="dialog" aria-modal="true">
+<form class="modal popup-card" id="form">
+<div class="modal-top">
+<div>
+<h2 data-t="modalTitle">Thêm Meme</h2>
+<p id="coords">Chọn vị trí trên bản đồ trước.</p>
+</div>
+<button class="close" id="close" type="button" aria-label="Close">×</button>
+</div>
+<div class="field">
+<label for="title" data-t="labelTitle">Tên địa điểm / meme</label>
+<input id="title" required maxlength="70" placeholder="Ví dụ: Trà đá cứu deadline">
+</div>
+<div class="field">
+<label for="story" data-t="labelStory">Meme</label>
+<textarea id="story" maxlength="240" placeholder="Nhập nội dung meme...">
+</textarea>
+</div>
+<div class="field">
+<label for="photo" data-t="labelPhoto">Ảnh meme (không bắt buộc)</label>
+<input id="photo" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+<small class="field-hint" data-t="photoHint">JPG, JPEG, PNG hoặc WebP; tối đa 10 MB. Ảnh sẽ lưu thành WebP; chưa hỗ trợ ảnh động.</small>
+<img class="preview" id="preview" alt="Selected image preview">
+</div>
+<div class="error" id="error">
+</div>
+<div class="submit-row">
+<button id="cancel" type="button" data-t="cancel">Hủy</button>
+<button class="save" type="submit" data-t="save">Ghim lên bản đồ ↗</button>
+</div>
+</form>
+</div>
+
+<script src="/assets/js/shared.js">
+</script>
+<script src="/assets/js/api.js"></script>
+<script src="/assets/js/map-layout.js">
+</script>
+<script src="/assets/js/admin.js">
+</script>
+<script src="/assets/js/map-copy.js"></script>
+<script src="/assets/js/map-pins.js"></script>
+<script src="/assets/js/map-profile.js"></script>
+<script src="/assets/js/map-composer.js"></script>
+<script src="/assets/js/map-leaderboard.js"></script>
+<script src="/assets/js/map.js">
+</script>
+</body>
+</html>
