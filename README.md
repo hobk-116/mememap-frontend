@@ -4,6 +4,17 @@
 
 MemeMap is a bilingual (Vietnamese/English) community map for posting memes and short stories at places around Hà Nội. It includes accounts, user profiles, aura voting, a city leaderboard, and a moderation dashboard.
 
+This repository is the **frontend-only showcase** (`mememap-frontend`). It is the static presentation build of MemeMap; its browser-local adapter is intended for demos and does not replace the full Python/SQLite application.
+
+## Demo accounts
+
+| Username | Password | Role |
+| --- | --- | --- |
+| `guest` | `guest123` | Demo user |
+| `admin-demo` | `admin123` | Demo admin |
+
+These credentials are local showcase data stored in the current browser tab. Do not reuse them in production.
+
 ## Project contents
 
 - `index.html` — landing, instructions, registration/login, and the signed-in user's profile.

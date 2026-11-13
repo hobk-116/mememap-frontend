@@ -113,7 +113,7 @@ a.button,button {
   display:grid;
   place-items:center;
   border-radius:50%;
-  background:var(--lime);
+  background:var(--fit-orange);
   font:12px var(--mono)
 }
 
@@ -260,7 +260,7 @@ a.button,button {
 
 .auth-field input:focus {
   border-color:#8b1e2d;
-  box-shadow:0 0 0 3px #c9a22750
+  box-shadow:0 0 0 3px #f5822050
 }
 
 .auth-help {

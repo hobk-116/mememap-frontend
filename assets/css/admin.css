@@ -5,7 +5,7 @@
 .admin-tabs { flex:none; display:flex; gap:4px; padding:9px 10px; border-bottom:1px solid var(--line); overflow-x:auto; overscroll-behavior:contain; scrollbar-width:thin }
 .admin-tab { flex:1; min-width:max-content; padding:9px 7px; border:0; border-radius:10px; background:transparent; color:var(--muted); font:700 12px var(--sans); white-space:nowrap }
 .admin-tab[aria-selected="true"] { background:var(--ink); color:#fff }
-.admin-tab-count { display:inline-grid; place-items:center; min-width:17px; height:17px; margin-left:4px; padding:0 4px; border-radius:20px; background:var(--coral); color:#fff; font:10px var(--mono) }
+.admin-tab-count { display:inline-grid; place-items:center; min-width:17px; height:17px; margin-left:4px; padding:0 4px; border-radius:20px; background:var(--hanu-red); color:#fff; font:10px var(--mono) }
 .admin-body { flex:1; min-height:0; overflow:auto; padding:12px; overscroll-behavior:contain; touch-action:pan-y; scrollbar-width:thin }
 .admin-body:focus-visible { outline:2px solid #8b1e2d; outline-offset:-3px }
 .admin-body button,.admin-action-form button { -webkit-tap-highlight-color:transparent }
@@ -25,7 +25,7 @@
 .admin-filter-grid .admin-full { grid-column:1/-1 }
 .admin-filters label,.admin-action-form label { display:grid; min-width:0; gap:4px; color:var(--muted); font-size:11px }
 .admin-filters input,.admin-filters select,.admin-action-form select { min-width:0; width:100%; padding:9px 10px; border:1px solid var(--line); border-radius:9px; background:#fff; color:var(--ink); font:12px var(--sans) }
-.admin-filters input:focus,.admin-filters select:focus,.admin-action-form select:focus { outline:2px solid #d9c47a; outline-offset:1px }
+.admin-filters input:focus,.admin-filters select:focus,.admin-action-form select:focus { outline:2px solid #f7b267; outline-offset:1px }
 .admin-filter-options { padding:0; font-size:12px }
 .admin-filter-options > summary { padding:3px 0; cursor:pointer; color:var(--muted) }
 .admin-filter-options[open] > summary { margin-bottom:8px }

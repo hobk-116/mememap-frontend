@@ -219,7 +219,7 @@ button {
   flex:none;
   border:2px solid #20221f;
   border-radius:50% 50% 50% 7px;
-  background:#c9a227;
+  background:#f58220;
   display:grid;
   place-items:center;
   transform:rotate(-45deg);
@@ -691,7 +691,7 @@ button {
   display:grid;
   place-items:center;
   border-radius:50%;
-  background:var(--lime);
+  background:var(--fit-orange);
   font:10px var(--mono)
 }
 
@@ -799,12 +799,12 @@ button {
 }
 
 .vote-button:hover:not(:disabled) {
-  background:var(--lime);
-  border-color:#d9c47a
+  background:var(--fit-orange);
+  border-color:#f7b267
 }
 
 .vote-button.selected {
-  background:var(--lime);
+  background:var(--fit-orange);
   border-color:#8b1e2d
 }
 
@@ -895,7 +895,7 @@ button {
   display:grid;
   place-items:center;
   border-radius:10px;
-  background:var(--lime);
+  background:var(--fit-orange);
   font:11px var(--mono)
 }
 
